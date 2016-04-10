@@ -58,3 +58,4 @@ Route::get('reviews', 'FrontController@reviews');
 Route::get('admin', 'FrontController@admin');
 
 Route::resource('usuario', 'UsuarioController');
+Route::resource('borrados', 'UsuarioBController');

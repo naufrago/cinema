@@ -27,6 +27,8 @@ class UsuarioController extends Controller
         return view('usuario.index',compact('users'));
     }
 
+   
+
     /**
      * Show the form for creating a new resource.
      *

@@ -61,7 +61,10 @@
                                     <a href="{!!URL::to('/usuario/create')!!}"><i class='fa fa-plus fa-fw'></i> Agregar</a>
                                 </li>
                                 <li>
-                                    <a href="{!!URL::to('/usuario')!!}"><i class='fa fa-list-ol fa-fw'></i> Usuarios</a>
+                                    <a href="{!!URL::to('/usuario')!!}"><i class='fa fa-list-ol fa-fw'></i> Usuarios Activos</a>
+                                </li>
+                                <li>
+                                    <a href="{!!URL::to('/borrados')!!}"><i class='fa fa-list-ol fa-fw'></i> Usuarios Borrados</a>
                                 </li>
                             </ul>
                         </li>
