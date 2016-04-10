@@ -101,7 +101,11 @@ class UsuarioController extends Controller
      */
     public function destroy($id)
     {
-        User::destroy($id);
+        // borra completamente los datos del uusraio en la tabla User::destroy($id);
+         
+        // hace q deje de ser visible y activo los datos del usuario  a borrar
+        $user = User::find($id);
+        $user->delete();
         Session::flash('message','Usuario Eliminado Correctamente');
         return Redirect::to('/usuario');
     }
