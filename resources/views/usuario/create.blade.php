@@ -1,9 +1,16 @@
 
 @extends('layouts.admin')
 	@section('content')
+		@include('alerts.request')
+
+
+
 
 		{!!Form::open(['route'=>'usuario.store', 'method'=>'POST'])!!}
-		<div class="form-group">
+		<!-- incluye el contedido del archivo usr-->
+			@include('usuario.forms.usr')
+
+		<!--<div class="form-group">
 			{!!Form::label('nombre','Nombre:')!!}
 			{!!Form::text('name',null,['class'=>'form-control','placeholder'=>'Ingresa el Nombre del usuario'])!!}
 		</div>
@@ -14,7 +21,7 @@
 		<div class="form-group">
 			{!!Form::label('password','Contraseña:')!!}
 			{!!Form::password('password',['class'=>'form-control','placeholder'=>'Ingresa el Password del usuario'])!!}
-		</div>
+		</div>-->
 		{!!Form::submit('Registrar',['class'=>'btn btn-primary'])!!}
 		{!!Form::close()!!}
 		

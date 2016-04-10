@@ -3,8 +3,13 @@
 namespace Cinema\Http\Controllers;
 
 use Illuminate\Http\Request;
-
 use Cinema\Http\Requests;
+use Cinema\Http\Requests\UserCreateRequest;
+use Cinema\Http\Requests\UserUpdateRequest;
+use Cinema\Http\Controllers\Controller;
+use Cinema\User;
+use Session;
+use Redirect;
 
 class UsuarioController extends Controller
 {
@@ -16,7 +21,9 @@ class UsuarioController extends Controller
     public function index()
     {
         //llama a la tabla user y trae todo el contenido
-        $users = \Cinema\User::all();
+        // este lista todo el contenido en una sola pagina  $users = User::all();
+        // este crea paginas y la cantidad de elementos pos pagimna
+         $users = User::paginate(5);
         return view('usuario.index',compact('users'));
     }
 
@@ -32,16 +39,17 @@ class UsuarioController extends Controller
 
     
 
-	public function store(Request $request)
+	public function store(UserCreateRequest $request)
     {
-        \Cinema\User::create([
+        User::create([
             'name' => $request['name'],
             'email' => $request['email'],
             'password' => bcrypt($request['password']),
         ]);
         //al guardar el contenido del formulario  retorna a la pagina usuario
         //y entrega un mensaje almacenado en index.blade.php
-        return redirect('/usuario')->with('message','store');
+        Session::flash('message','Usuario '.$request['name'].' fue Creado Correctamente');
+        return redirect('/usuario');
     }
 
     /**
@@ -62,8 +70,11 @@ class UsuarioController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
-    {
-        //
+    {   
+        //crea una variable q almacene el id del usuario
+        $user = User::find($id);
+        // retorna una vista a la cual  lleva el usuario correspondiente
+        return view('usuario.edit',['user'=>$user]);
     }
 
     /**
@@ -73,9 +84,13 @@ class UsuarioController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UserUpdateRequest $request, $id)
     {
-        //
+        $user = User::find($id);
+        $user->fill($request->all());
+        $user->save();
+        Session::flash('message','Usuario '.$user->name.' fue Actualizado Correctamente');
+        return Redirect::to('/usuario');
     }
 
     /**
@@ -86,7 +101,9 @@ class UsuarioController extends Controller
      */
     public function destroy($id)
     {
-        //
+        User::destroy($id);
+        Session::flash('message','Usuario Eliminado Correctamente');
+        return Redirect::to('/usuario');
     }
 	
 }
